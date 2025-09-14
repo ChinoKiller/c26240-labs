@@ -1,6 +1,7 @@
 ﻿using backend_lab_c26240.Models;
 using backend_lab_c26240.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_lab_c26240.Controllers
@@ -22,5 +23,27 @@ namespace backend_lab_c26240.Controllers
             var paises = countryService.GetCountries();
             return paises;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<bool>> CreateCountry(CountryModel country)
+        {
+            if (country == null)
+            {
+                return BadRequest();
+            }
+            
+            var result = countryService.CreateCountry(country);
+            if (string.IsNullOrEmpty(result))
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        } 
+
+
+
     }
 }

@@ -16,5 +16,25 @@ namespace backend_lab_c26240.Services
         {
             return countryRepository.GetCountries();
         }
+
+        public string CreateCountry(CountryModel country)
+        {
+            var result = string.Empty;
+
+            try
+            {
+                var isCreated = countryRepository.CreateCountry(country);
+                if (!isCreated)
+                {
+                    result = "Error al crear el país";
+                }
+            }
+            catch (Exception)
+            {
+                result = "Error creando país";
+            }
+
+            return result;
+        }
     }
 }
